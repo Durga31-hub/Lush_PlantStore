@@ -18,6 +18,16 @@ Navigation bar for easy browsing
 
 Footer with contact or social links
 
+✍️ Blog & Feedback
+
+Write and publish plant-related blogs
+
+View blogs posted by other users
+
+Comment and give feedback on blogs
+
+Community-driven plant care tips
+
 🛠️ Tech Stack
 
 HTML5 – structure and content
