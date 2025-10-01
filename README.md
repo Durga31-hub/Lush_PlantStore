@@ -24,9 +24,6 @@ HTML5 – structure and content
 
 CSS3 – styling, layout, responsiveness
 
-📷 Screenshots (Optional)
-
-
 
 🔧 Installation & Usage
 
