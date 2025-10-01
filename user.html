@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Page — Lush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--dark:#214f3b;--muted:#6b7b73}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Poppins,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#173229;background:#f6f7f5}
+    header{background:var(--dark);color:#fff;padding:18px 20px}
+    header .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header a{color:#fff;text-decoration:none;font-weight:600}
+    main{max-width:1100px;margin:0 auto;padding:32px 16px}
+    .card{background:#fff;border-radius:12px;box-shadow:0 10px 26px rgba(0,0,0,.08);padding:18px}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .booking{background:#fff;border:1px solid #e7efe9;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
+    .tag{background:#eaf3ea;color:#214f3b;border:1px solid #d4e6db;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <div style="font-weight:800;letter-spacing:.3px">Lush — My Page</div>
+      <div>
+        <span id="greet" style="margin-right:10px;opacity:.95"></span>
+        <a href="lush.html">← Home</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div id="notice" class="card" style="display:none;margin-bottom:12px;background:#e7fff0;border:1px solid #b9f2cf">Booking submitted! We'll contact you shortly.</div>
+    <div class="card">
+      <h2 style="margin:0 0 10px">My Bookings</h2>
+      <div id="empty" style="display:none;color:#6b7b73">No bookings yet. <a href="book.html" style="color:#2e7a54;text-decoration:none;font-weight:700">Book now</a>.</div>
+      <div id="list" class="grid"></div>
+    </div>
+  </main>
+  <script>
+    function getCurrentUser(){
+      try { return JSON.parse(localStorage.getItem('lush_user')||'null'); } catch(e){ return null; }
+    }
+    function displayNameFromEmail(email){
+      if(!email) return '';
+      var base = email.split('@')[0];
+      base = base.replace(/[._-]+/g,' ');
+      return base.split(' ').filter(Boolean).map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(' ');
+    }
+    function getBookings(){
+      var user = getCurrentUser();
+      var key = user ? ('lush_bookings_'+user.email) : 'lush_bookings_guest';
+      try { return JSON.parse(localStorage.getItem(key)||'[]'); } catch(e){ return []; }
+    }
+    function saveBookings(list){
+      var user = getCurrentUser();
+      var key = user ? ('lush_bookings_'+user.email) : 'lush_bookings_guest';
+      localStorage.setItem(key, JSON.stringify(list));
+    }
+    // Require login so we always have a client name
+    (function(){
+      var u = getCurrentUser();
+      if(!u){ window.location.href = 'login.html?return=' + encodeURIComponent('user.html'); }
+    })();
+
+    function render(){
+      var user = getCurrentUser();
+      var greet = document.getElementById('greet');
+      if(greet){ greet.textContent = user ? ('Hi, ' + displayNameFromEmail(user.email)) : 'Hi'; }
+      var params = new URLSearchParams(location.search);
+      if(params.get('booked')==='1'){ document.getElementById('notice').style.display='block'; }
+      // If there are multi-selected plants waiting, add them as a booking now
+      try{
+        var multi = JSON.parse(localStorage.getItem('lush_multi_selected')||'[]');
+        if(Array.isArray(multi) && multi.length){
+          var existing = getBookings();
+          var payload = { name: displayNameFromEmail(user?.email||'Guest'), email: user?.email||'', phone:'', date:'', type:'Mixed', plantName: multi.join(', '), quantity: multi.length, notes:'Multiple selections', createdAt: new Date().toISOString() };
+          existing.push(payload);
+          saveBookings(existing);
+          localStorage.removeItem('lush_multi_selected');
+        }
+      }catch(e){}
+
+      var list = getBookings();
+      var listEl = document.getElementById('list');
+      var empty = document.getElementById('empty');
+      listEl.innerHTML = '';
+      if(!list.length){ empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      list.slice().reverse().forEach(function(b){
+        var el = document.createElement('div');
+        el.className = 'booking';
+        el.innerHTML = '<div><strong>'+ (b.type||'Plant') +'</strong> · Qty '+(b.quantity||1)+'<div class="muted" style="color:#6b7b73;font-size:12px">'+(b.date||'Any date')+' · '+(b.name||'')+'</div></div>'+
+                       '<div class="tag">Submitted</div>';
+        listEl.appendChild(el);
+      });
+    }
+    render();
+  </script>
+</body>
+</html>
+
+

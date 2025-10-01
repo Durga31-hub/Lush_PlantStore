@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Favorites — Lush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--dark:#214f3b;--muted:#6b7b73}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Poppins,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#173229;background:#f6f7f5}
+    header{background:var(--dark);color:#fff;padding:18px 20px}
+    header .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header a{color:#fff;text-decoration:none;font-weight:600}
+    main{max-width:1100px;margin:0 auto;padding:32px 16px}
+    h1{margin:6px 0 2px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.08)}
+    .thumb{height:180px;background:#eef7ee;display:flex;align-items:center;justify-content:center}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .content{padding:16px}
+    .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-top:8px}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+    .btn{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .ghost{background:#eaf3ea;color:#214f3b;border:1px solid #d4e6db}
+    .primary{background:#214f3b;color:#fff}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <div style="font-weight:800;letter-spacing:.3px">Lush — Favorites</div>
+      <div>
+        <span id="greet" style="margin-right:10px;opacity:.9"></span>
+        <a href="lush.html">← Back to Home</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <h1>Your favorite plants</h1>
+    <p style="color:#6b7b73">Quickly review and book your saved plants.</p>
+    <div id="loginPrompt" style="display:none;margin:10px 0 16px;padding:12px 14px;background:#fff4d6;border:1px solid #ffe3a0;border-radius:10px">Please <a href="login.html" style="font-weight:700;color:#2e7a54;text-decoration:none">login</a> or <a href="signup.html" style="font-weight:700;color:#2e7a54;text-decoration:none">create an account</a> to sync your favorites across devices.</div>
+    <div id="empty" style="display:none;color:#6b7b73;margin-top:10px">No favorites yet. Go to the <a href="lush.html#plants" style="color:#2e7a54;text-decoration:none;font-weight:700">Planters</a> section and tap the heart.</div>
+    <div class="grid" id="favGrid"></div>
+  </main>
+
+  <script>
+    function getCurrentUser(){
+      try { return JSON.parse(localStorage.getItem('lush_user')||'null'); } catch(e){ return null; }
+    }
+    function displayNameFromEmail(email){
+      if(!email) return '';
+      var base = email.split('@')[0];
+      base = base.replace(/[._-]+/g,' ');
+      return base.split(' ').filter(Boolean).map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(' ');
+    }
+    function getFavorites(){
+      var user = getCurrentUser();
+      var key = user ? ('lush_favorites_'+user.email) : 'lush_favorites_guest';
+      try { return JSON.parse(localStorage.getItem(key)||'[]'); } catch(e){ return []; }
+    }
+    function saveFavorites(list){
+      var user = getCurrentUser();
+      var key = user ? ('lush_favorites_'+user.email) : 'lush_favorites_guest';
+      localStorage.setItem(key, JSON.stringify(list));
+    }
+    function render(){
+      var grid = document.getElementById('favGrid');
+      var empty = document.getElementById('empty');
+      var prompt = document.getElementById('loginPrompt');
+      var user = getCurrentUser();
+      var greet = document.getElementById('greet');
+      if(greet){ greet.textContent = user ? ('Hi, ' + displayNameFromEmail(user.email)) : ''; }
+      prompt.style.display = user ? 'none' : 'block';
+      var list = getFavorites();
+      grid.innerHTML = '';
+      if(!list.length){ empty.style.display = 'block'; return; } else { empty.style.display = 'none'; }
+      list.forEach(function(item){
+        var card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = '<div class="thumb">'+ (item.img ? '<img src="'+item.img+'" alt="'+item.name+'"/>' : '🪴') + '</div>'+
+                         '<div class="content">\n  <h3 style="margin:0 0 4px">'+item.name+'</h3>\n  <div class="meta">'+(item.price||'')+'<span></span></div>\n  <div class="actions">\n    <a class="btn ghost" href="book.html">Book Now</a>\n    <button class="btn primary" data-id="'+item.id+'">Remove</button>\n  </div>\n</div>';
+        grid.appendChild(card);
+      });
+      grid.querySelectorAll('button[data-id]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var id = btn.getAttribute('data-id');
+          var list = getFavorites();
+          var idx = list.findIndex(function(x){ return x.id===id; });
+          if(idx!==-1){ list.splice(idx,1); saveFavorites(list); render(); }
+        });
+      });
+    }
+    render();
+  </script>
+</body>
+</html>
+
+

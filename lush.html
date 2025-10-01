@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lush — Plant Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;800&family=Inter:wght@300;400;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ----------------------------------------
+       Lush - single-file HTML + CSS
+       - Follow the provided design image closely
+       - Replace placeholder images (data URIs) with your real images
+       ---------------------------------------- */
+
+    :root{
+      --dark-green:#214f3b;
+      --accent-green:#2e7a54;
+      --muted:#f6f7f5;
+      --soft:#eaf3ea;
+      --card:#ffffff;
+      --text:#173229;
+      --muted-text:#6b7b73;
+      --shadow: 0 6px 18px rgba(15,28,20,0.08);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: 'Jost', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color:var(--text);
+      background:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* --- Header / Nav --- */
+    .topbar{position:absolute;top:12px;left:0;right:0;z-index:30}
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:26px 64px;
+      gap:20px;
+      font-family:'Poppins','Jost',Inter,system-ui;
+    }
+    /* make headings more attractive without changing colors */
+    h1,h2,h3,h4{font-family:'Poppins','Jost',Inter,system-ui;font-weight:700;letter-spacing:.2px}
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:#fff;
+      font-weight:800;
+      letter-spacing:0.6px;
+    }
+    .logo .mark{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:transparent;box-shadow:none}
+    nav{flex:1}
+    nav ul{display:flex;align-items:center;gap:26px;list-style:none;margin:0;padding:0;justify-content:space-evenly}
+    nav a{color:rgba(255,255,255,0.9);text-decoration:none;font-weight:600;letter-spacing:.2px;padding:8px 12px;border-radius:10px;transition:background .2s ease, box-shadow .2s ease, transform .05s ease}
+    nav a:hover, nav a:focus{background:rgba(255,255,255,0.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18)}
+    nav a:active{transform:scale(0.98);background:rgba(255,255,255,0.14);box-shadow:inset 0 0 0 2px rgba(255,255,255,0.22)}
+    .call-btn{padding:8px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.22);background:transparent;color:#fff;font-weight:700;transition:background .2s ease, box-shadow .2s ease, transform .05s ease}
+    .call-btn:hover,.call-btn:focus{background:rgba(255,255,255,0.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18)}
+    .call-btn:active{transform:scale(0.98);background:rgba(255,255,255,0.14);box-shadow:inset 0 0 0 2px rgba(255,255,255,0.22)}
+
+    /* dropdown */
+    .dropdown{position:relative}
+    .dropdown > button{background:transparent;border:1px solid rgba(255,255,255,0.22);color:#fff;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+    .dropdown-menu{position:absolute;right:0;top:calc(100% + 8px);background:#173229;border:1px solid rgba(255,255,255,0.15);border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,0.18);padding:8px;display:none;min-width:160px}
+    .dropdown-menu a{display:block;color:#fff;padding:8px 10px;border-radius:8px}
+    .dropdown-menu a:hover{background:rgba(255,255,255,0.10)}
+    .dropdown.open .dropdown-menu{display:block}
+
+    /* hamburger (mobile) */
+    .menu-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:8px;padding:8px 12px;font-weight:700}
+    .menu-toggle:focus{outline:none}
+
+    /* --- Hero --- */
+    .hero{
+      background: linear-gradient(180deg, rgba(33,79,59,0.60) 0%, rgba(46,122,84,0.40) 60%), url('Assests/home_image.png') center/cover no-repeat;
+      color:#fff;
+      padding:108px 64px 80px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero .eyebrow{opacity:0.95;font-weight:600;margin-bottom:12px}
+    .hero h1{font-size:44px;margin:0 0 16px;font-weight:800;line-height:1.05}
+    .hero p{max-width:820px;margin:0 auto 26px;color:rgba(255,255,255,0.9);font-weight:500}
+    .hero .actions{display:flex;gap:14px;justify-content:center;margin-top:8px}
+    .btn{padding:12px 18px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn.primary{background:#fff;color:var(--dark-green)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.18);color:#fff}
+
+    /* small vertical index (01 02 03) on the right */
+    .hero .index-list{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;color:rgba(255,255,255,0.6);font-weight:700}
+    .hero .index-list .active{color:#fff}
+
+    /* --- Section: features --- */
+    .container{max-width:1160px;margin:0 auto;padding:48px 24px}
+    .section-intro{display:flex;gap:30px;align-items:flex-start}
+    .section-intro h2{margin:0;font-size:28px;color:#194235}
+    .section-intro p{margin:6px 0 0;color:var(--muted-text);max-width:720px;line-height:1.7}
+
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px;max-width:980px;margin-left:auto;margin-right:auto}
+    .feature{background:var(--card);padding:26px;border-radius:12px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start}
+    .feature .icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#f4faf5;color:var(--accent-green);font-weight:700}
+    .feature h3{margin:0 0 6px;font-size:16px}
+    .feature p{margin:0;color:var(--muted-text);font-size:14px}
+    /* Feature cards (center highlighted like screenshot) */
+    .feature{transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease}
+    .feature:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(15,28,20,.12)}
+    .feature.center{background:linear-gradient(180deg,var(--accent-green),var(--dark-green));color:#fff}
+    .feature.center .icon{background:rgba(255,255,255,0.12);color:#fff}
+
+    /* --- Products grid --- */
+    .products{padding:10px 0}
+    .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1160px;margin-left:auto;margin-right:auto}
+    .product{background:var(--card);border-radius:12px;padding:12px;box-shadow:var(--shadow);position:relative;transition:transform .25s ease, box-shadow .25s ease}
+    .product .image{width:100%;height:160px;border-radius:8px;background:linear-gradient(180deg,#fff,#f1f4f2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .product h4{margin:10px 0 6px;font-size:15px}
+    .meta{display:flex;justify-content:space-between;align-items:center}
+    .price{font-weight:700;color:var(--muted-text)}
+    .buy{padding:6px 10px;border-radius:8px;background:var(--soft);border:1px solid #e3efe6;font-weight:700;font-size:13px}
+    .fav{position:absolute;right:12px;top:12px;background:#fff;border-radius:999px;padding:6px 9px;box-shadow:0 8px 18px rgba(15,28,20,0.08);cursor:pointer;user-select:none;transition:background .2s ease,color .2s ease}
+    .fav.active{background:#e53e3e;color:#fff}
+    .product:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(15,28,20,.12)}
+
+    /* --- Two-column feature image + bullets --- */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;margin-top:36px}
+    .two-col .photo{height:280px;border-radius:12px;background:linear-gradient(180deg,#f8f8f8,#f7f8f6);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+    .floating-card{position:absolute;left:18px;top:18px;background:#fff;border-radius:12px;box-shadow:0 12px 30px rgba(15,28,20,0.14);padding:10px;display:flex;gap:10px;align-items:center}
+    .floating-card img{width:64px;height:64px;object-fit:cover;border-radius:10px}
+    .floating-card .txt{font-weight:700;color:var(--text);font-size:14px}
+    .bullets{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .bullet{display:flex;gap:14px;align-items:flex-start;background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow);border:1px solid #e7efe9}
+    .bullet-icon{width:56px;height:56px;border-radius:12px;background:#f4faf5;display:flex;align-items:center;justify-content:center}
+    .bullet-icon img{width:30px;height:30px;object-fit:contain;filter: hue-rotate(0deg) saturate(100%)}
+
+    /* --- Gallery --- */
+    .gallery{margin-top:44px}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:160px;gap:10px}
+    .gallery-grid > div{border-radius:8px;overflow:hidden}
+
+    /* --- Testimonials --- */
+    .testimonials{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .testimonial{background:var(--soft);padding:20px;border-radius:12px}
+    .avatar{width:46px;height:46px;border-radius:999px;background:#fff;display:inline-flex;align-items:center;justify-content:center;margin-right:12px}
+    .t-head{display:flex;align-items:center}
+
+    /* --- Blog --- */
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .blog-card{background:var(--card);border-radius:10px;padding:14px;box-shadow:var(--shadow)}
+
+    /* --- Footer --- */
+    footer{background:var(--dark-green);color:#dfeee5;padding:48px 24px;margin-top:36px}
+    .footer-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;align-items:center}
+    .socials{display:flex;gap:12px}
+    .social{width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .social img{width:22px;height:22px;display:block;filter:invert(100%);opacity:.9}
+    .social:hover{background:rgba(255,255,255,0.12)}
+
+    /* --- Utilities --- */
+    .muted{color:var(--muted-text)}
+    .centered-title{margin:24px 0 12px;text-align:center;color:#194235}
+
+    /* --- Responsive --- */
+    @media (max-width:1024px){
+      .products-grid{grid-template-columns:repeat(3,1fr)}
+      .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:768px){
+      header{padding:18px 24px}
+      .hero{padding:64px 24px}
+      .menu-toggle{display:inline-block}
+      nav ul{position:absolute;left:0;right:0;top:64px;background:rgba(23,50,41,0.98);flex-direction:column;gap:16px;padding:16px 24px;border-bottom-left-radius:12px;border-bottom-right-radius:12px;display:none}
+      nav ul.open{display:flex}
+      .section-intro{flex-direction:column;gap:12px}
+      .features{grid-template-columns:1fr}
+      .products-grid{grid-template-columns:repeat(2,1fr)}
+      .two-col{grid-template-columns:1fr}
+      .gallery-grid{grid-template-columns:1fr}
+      .testimonials{grid-template-columns:1fr}
+      .blog-grid{grid-template-columns:1fr}
+      .footer-inner{flex-direction:column;align-items:flex-start}
+    }
+
+
+  </style>
+</head>
+<body>
+  <!-- Top (nav sits on top of dark hero background like the design) -->
+  <div class="hero">
+    <header class="topbar">
+      <div class="logo">
+        <div class="mark"><img src="Assests/Web_Logo.png" alt="Lush" style="width:36px;height:36px;border-radius:8px;display:block"/></div>
+        <div><div style="font-size:14px;opacity:0.9">Lush</div></div>
+      </div>
+
+      <nav aria-label="Primary navigation">
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryMenu">☰ Menu</button>
+        <ul id="primaryMenu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#plants">Planters</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="login.html" id="loginLink">Login</a></li>
+          <li class="dropdown" id="moreMenu">
+            <button type="button" aria-haspopup="true" aria-expanded="false">More ▾</button>
+            <div class="dropdown-menu" role="menu">
+              <a href="favorites.html">Favorites</a>
+              <a href="user.html">My Bookings</a>
+              <a href="write.html">Write Blog</a>
+              <a href="feedback.html">Write a Feedback</a>
+              <a href="#" id="logoutLink" style="display:none">Logout</a>
+            </div>
+          </li>
+          <li><button class="call-btn">Call Us</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="eyebrow" style="opacity:.95;font-size:16px">Nature's Beauty Delivered to You</div>
+      <h1>Nature's Beauty Delivered to You</h1>
+      <p>Nature's beauty is just a click away with our online flower and plant shop. We offer a wide variety of flowers that will bring a touch of nature to your home!</p>
+
+      <div class="actions">
+        <a class="btn primary" href="book.html">Book Now</a>
+        <a class="btn ghost" href="https://www.youtube.com/watch?v=7982MjqxbTQ" target="_blank" rel="noopener">Watch Video</a>
+      </div>
+    </div>
+
+    <div class="index-list">
+      <div>01</div>
+      <div>02</div>
+      <div>03</div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main class="container">
+    <!-- About Us title centered -->
+    <section id="about" style="margin-top:18px">
+      <h2 class="centered-title">About Us</h2>
+    </section>
+
+    <section style="margin-top:18px">
+      <h2 class="centered-title">We Help Choose The Most Suitable Plants For You</h2>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="icon">🏠</div>
+          <div>
+            <h3>Indoor Plants</h3>
+            <p>Bring the beauty of nature to your indoor spaces with our wide selection of indoor plants.</p>
+          </div>
+        </div>
+
+        <div class="feature center">
+          <div class="icon">🌳</div>
+          <div>
+            <h3>Outdoor Plants</h3>
+            <p>Bring a touch of greenery to your outdoor spaces. Perfect for patios and balconies.</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="icon">🪴</div>
+          <div>
+            <h3>Plants Pots</h3>
+            <p>Add a touch of style to your indoor or outdoor spaces with our curated pots and planters.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products" id="plants">
+      <h3 class="centered-title" style="margin-top:26px">What We Offer To You</h3>
+      <div class="products-grid">
+
+        <!-- replicate 8 items -->
+        <article class="product" data-name="Aloe Vera">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_1.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Aloe Vera</h4>
+          <div class="meta">
+            <div class="price">$12.00</div>
+            <button class="buy">Buy Now</button>
+          </div>
+        </article>
+
+        <article class="product" data-name="Snake Plant">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_2.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Snake Plant</h4>
+          <div class="meta"><div class="price">$15.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+        <article class="product" data-name="ZZ Plant">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_3.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>ZZ Plant</h4>
+          <div class="meta"><div class="price">$9.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+        <article class="product" data-name="Peace Lily">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_4.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Peace Lily</h4>
+          <div class="meta"><div class="price">$19.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+        <article class="product" data-name="Spider Plant">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_5.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Spider Plant</h4>
+          <div class="meta"><div class="price">$21.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+        <article class="product" data-name="Rubber Plant">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_6.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Rubber Plant</h4>
+          <div class="meta"><div class="price">$25.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+        <article class="product" data-name="Fiddle Leaf Fig">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_7.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Fiddle Leaf Fig</h4>
+          <div class="meta"><div class="price">$18.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+        <article class="product" data-name="Monstera Deliciosa">
+          <div class="fav">♡</div>
+          <div class="image"><img src="Assests/Product_Plant_8.png" alt="Cactus Plant" style="width:100%;height:100%;object-fit:cover;border-radius:8px" /></div>
+          <h4>Monstera Deliciosa</h4>
+          <div class="meta"><div class="price">$13.00</div><button class="buy">Buy Now</button></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Two-column feature -->
+    <section class="two-col">
+      <div class="photo">
+        <img src="Assests/Feature_image.png" alt="Feature" style="width:100%;height:100%;object-fit:cover" />
+        <div class="floating-card">
+          <img src="Assests/Product_Plant_6.png" alt="Mini"/>
+          <div class="txt">Healthy<br/>Succulent</div>
+        </div>
+      </div>
+      <div>
+        <div class="bullets">
+          <div class="bullet">
+            <div class="bullet-icon"><img src="Assests/Quality_Product_logo.png" alt="Quality"/></div>
+            <div>
+              <h4 style="margin:0 0 6px">Quality Product</h4>
+              <p class="muted" style="margin:0">Our flowers are of the highest quality, carefully selected and sourced from reputable growers.</p>
+            </div>
+          </div>
+
+          <div class="bullet">
+            <div class="bullet-icon"><img src="Assests/Temperature_logo.png" alt="Fresh"/></div>
+            <div>
+              <h4 style="margin:0 0 6px">Always Fresh</h4>
+              <p class="muted" style="margin:0">Our flowers are always fresh, handpicked and delivered promptly for maximum enjoyment.</p>
+            </div>
+          </div>
+
+          <div class="bullet">
+            <div class="bullet-icon"><img src="Assests/Grow_Sprout_logo.png" alt="Work Smart"/></div>
+            <div>
+              <h4 style="margin:0 0 6px">Work Smart</h4>
+              <p class="muted" style="margin:0">We use innovative techniques and technology to streamline our processes.</p>
+            </div>
+          </div>
+
+          <div class="bullet">
+            <div class="bullet-icon"><img src="Assests/Pruning_logo.png" alt="Service"/></div>
+            <div>
+              <h4 style="margin:0 0 6px">Excellent Service</h4>
+              <p class="muted" style="margin:0">We provide excellent customer service, going above and beyond to meet our customers' needs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery">
+      <h3 class="centered-title">Our Gallery View</h3>
+      <div class="gallery-grid">
+        <div><img src="Assests/Gallery_1.png" alt="Gallery 1" style="width:100%;height:100%;object-fit:cover" /></div>
+        <div><img src="Assests/Gallery_2.png" alt="Gallery 2" style="width:100%;height:100%;object-fit:cover" /></div>
+        <div><img src="Assests/Gallery_3.png" alt="Gallery 3" style="width:100%;height:100%;object-fit:cover" /></div>
+        <div><img src="Assests/Gallery_4.png" alt="Gallery 4" style="width:100%;height:100%;object-fit:cover" /></div>
+        <div><img src="Assests/Gallery_5.png" alt="Gallery 5" style="width:100%;height:100%;object-fit:cover" /></div>
+        <div><img src="Assests/Gallery_1.png" alt="Gallery 6" style="width:100%;height:100%;object-fit:cover" /></div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="margin-top:36px">
+      <h3 class="centered-title">What Do They Say About Us</h3>
+      <div class="testimonials">
+        <div class="testimonial">
+          <div class="t-head"><div class="avatar">J</div><div><strong>Jessica Watson</strong><div class="muted" style="font-size:13px">Highly recommend this website for quality flowers and plants.</div></div></div>
+        </div>
+        <div class="testimonial">
+          <div class="t-head"><div class="avatar">K</div><div><strong>Kate Szu</strong><div class="muted" style="font-size:13px">Great service, beautiful flowers, timely delivery.</div></div></div>
+        </div>
+        <div class="testimonial">
+          <div class="t-head"><div class="avatar">G</div><div><strong>Grace</strong><div class="muted" style="font-size:13px">I am very happy with my purchase; the plants were healthy and arrived on time.</div></div></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:12px">
+        <a href="feedback.html" style="color:var(--accent-green);text-decoration:none;font-weight:800">Read more feedbacks →</a>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section style="margin-top:36px">
+      <h3 class="centered-title">Interesting Blog To Read</h3>
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px"><img src="Assests/Blog_!.png" alt="Blog image 1" style="width:100%;height:100%;object-fit:cover" /></div>
+          <h4 style="margin:0 0 6px">More productive with an atmosphere of greenery</h4>
+          <p class="muted" style="margin:0 0 10px">An atmosphere of greenery can increase productivity in the workplace.</p>
+          <div class="muted" style="font-size:13px">January 20, 2023 &nbsp; · &nbsp; <a href="#" style="color:var(--accent-green);text-decoration:none;font-weight:700">Read More →</a></div>
+        </article>
+
+        <article class="blog-card">
+          <div style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px"><img src="Assests/Blog_2.png" alt="Blog image 2" style="width:100%;height:100%;object-fit:cover" /></div>
+          <h4 style="margin:0 0 6px">The benefits of plants in your room</h4>
+          <p class="muted" style="margin:0 0 10px">Plants in your room can bring numerous benefits, such as improved air quality.</p>
+          <div class="muted" style="font-size:13px">January 10, 2023 &nbsp; · &nbsp; <a href="#" style="color:var(--accent-green);text-decoration:none;font-weight:700">Read More →</a></div>
+        </article>
+
+        <article class="blog-card">
+          <div style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px"><img src="Assests/Blog_3.png" alt="Blog image 3" style="width:100%;height:100%;object-fit:cover" /></div>
+          <h4 style="margin:0 0 6px">Hobbyist plants in the house</h4>
+          <p class="muted" style="margin:0 0 10px">Keeping hobbyist plants is a great way to bring nature indoors.</p>
+          <div class="muted" style="font-size:13px">January 05, 2023 &nbsp; · &nbsp; <a href="#" style="color:var(--accent-green);text-decoration:none;font-weight:700">Read More →</a></div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-inner">
+      <div>
+        <div style="font-weight:800;font-size:18px">Find how to contact us</div>
+        <div class="muted" style="margin-top:6px">Contact us on social media or send an email.</div>
+      </div>
+        <div class="socials">
+        <a class="social" href="https://www.facebook.com/" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+        <a class="social" href="https://www.instagram.com/" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+        <a class="social" href="https://www.linkedin.com/" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a class="social" href="https://twitter.com/" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X"></a>
+      </div>
+    </div>
+
+    <div style="max-width:1160px;margin:18px auto 0;color:#cfe8d9;text-align:center;font-size:13px">© Copyright © 2023 Lush. All rights reserved.</div>
+  </footer>
+
+  <div id="toast" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#173229;color:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);font-weight:700;display:none;z-index:1000">Marked as favorite ♥</div>
+
+  <script>
+    // Favorite toggle on products with persistence
+    function getCurrentUser(){
+      try { return JSON.parse(localStorage.getItem('lush_user')||'null'); } catch(e){ return null; }
+    }
+    function displayNameFromEmail(email){
+      if(!email) return '';
+      var base = email.split('@')[0];
+      base = base.replace(/[._-]+/g,' ');
+      return base.split(' ').filter(Boolean).map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(' ');
+    }
+    function getFavorites(){
+      var user = getCurrentUser();
+      var key = user ? ('lush_favorites_'+user.email) : 'lush_favorites_guest';
+      try { return JSON.parse(localStorage.getItem(key)||'[]'); } catch(e){ return []; }
+    }
+    function saveFavorites(list){
+      var user = getCurrentUser();
+      var key = user ? ('lush_favorites_'+user.email) : 'lush_favorites_guest';
+      localStorage.setItem(key, JSON.stringify(list));
+    }
+    document.querySelectorAll('.product .fav').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var product = btn.closest('.product');
+        var name = product.querySelector('h4')?.textContent?.trim() || 'Plant';
+        var price = product.querySelector('.price')?.textContent?.trim() || '';
+        var img = product.querySelector('.image img')?.getAttribute('src') || '';
+        var id = name + '|' + img + '|' + price;
+        var list = getFavorites();
+        var idx = list.findIndex(function(x){ return x.id === id; });
+        if(btn.classList.toggle('active')){
+          if(idx === -1){ list.push({id:id,name:name,price:price,img:img}); }
+        }else{
+          if(idx !== -1){ list.splice(idx,1); }
+        }
+        saveFavorites(list);
+        const toast = document.getElementById('toast');
+        toast.textContent = btn.classList.contains('active') ? 'Marked as favorite ♥' : 'Removed from favorites';
+        toast.style.display = 'block';
+        clearTimeout(window.__toastTimer);
+        window.__toastTimer = setTimeout(function(){ toast.style.display = 'none'; }, 1500);
+      });
+    });
+
+    // Blog Read More links -> blogs page
+    document.querySelectorAll('.blog-card a').forEach(function(a){
+      a.addEventListener('click', function(ev){
+        ev.preventDefault();
+        window.location.href = 'blogs.html';
+      });
+    });
+
+    // Responsive menu toggle
+    (function(){
+      var toggle = document.getElementById('menuToggle');
+      var menu = document.getElementById('primaryMenu');
+      if(toggle && menu){
+        toggle.addEventListener('click', function(){
+          var isOpen = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        // close menu after clicking a link (on small screens)
+        menu.querySelectorAll('a, button').forEach(function(el){
+          el.addEventListener('click', function(){
+            if(menu.classList.contains('open')){
+              menu.classList.remove('open');
+              toggle.setAttribute('aria-expanded','false');
+            }
+          });
+        });
+      }
+    })();
+
+    // More dropdown
+    (function(){
+      var more = document.getElementById('moreMenu');
+      if(!more) return;
+      var btn = more.querySelector('button');
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        more.classList.toggle('open');
+        btn.setAttribute('aria-expanded', more.classList.contains('open') ? 'true':'false');
+      });
+      document.addEventListener('click', function(){ more.classList.remove('open'); btn.setAttribute('aria-expanded','false'); });
+    })();
+
+    // Scroll spy: highlight hero index numbers as white
+    (function(){
+      var items = document.querySelectorAll('.hero .index-list div');
+      if(!items.length) return;
+      var sections = [document.querySelector('.hero'), document.getElementById('plants'), document.querySelector('footer')];
+      function onScroll(){
+        var y = window.scrollY + window.innerHeight * 0.35;
+        var idx = 0;
+        for(var i=0;i<sections.length;i++){
+          var s = sections[i];
+          if(!s) continue;
+          var top = s.getBoundingClientRect().top + window.scrollY;
+          if(y >= top) idx = i; else break;
+        }
+        items.forEach(function(el,i){ el.classList.toggle('active', i===idx); });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+
+    // Contact link should scroll to footer contact section
+    document.querySelectorAll('a[href="#contact"]').forEach(function(a){
+      a.addEventListener('click', function(){
+        document.getElementById('contact')?.scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    // Call Us button -> redirect to call.html where number is displayed
+    document.querySelectorAll('.call-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        window.location.href = 'call.html';
+      });
+    });
+
+    // Buy Now buttons -> require login then go to book.html
+    document.querySelectorAll('.buy').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var product = btn.closest('.product');
+        var name = product?.getAttribute('data-name') || product?.querySelector('h4')?.textContent?.trim() || '';
+        if(name){ localStorage.setItem('lush_selected_plant', name); }
+        var user = getCurrentUser();
+        if(!user){
+          window.location.href = 'login.html?return=' + encodeURIComponent('book.html');
+        } else {
+          window.location.href = 'book.html';
+        }
+      });
+    });
+
+    // Multi-select mode (from booking page)
+    (function(){
+      if(localStorage.getItem('lush_select_mode')!=='1') return;
+      var selected = new Set(JSON.parse(localStorage.getItem('lush_multi_selected')||'[]'));
+      function save(){ localStorage.setItem('lush_multi_selected', JSON.stringify(Array.from(selected))); }
+      document.querySelectorAll('.product').forEach(function(card){
+        var name = card.getAttribute('data-name') || card.querySelector('h4')?.textContent?.trim();
+        if(!name) return;
+        // add a check toggle on each card
+        var tag = document.createElement('div');
+        tag.textContent = selected.has(name) ? 'Selected' : 'Select';
+        tag.style.position = 'absolute';
+        tag.style.left = '12px';
+        tag.style.top = '12px';
+        tag.style.padding = '4px 8px';
+        tag.style.borderRadius = '8px';
+        tag.style.background = selected.has(name) ? '#2e7a54' : '#ffffff';
+        tag.style.color = selected.has(name) ? '#ffffff' : '#173229';
+        tag.style.border = '1px solid #d4e6db';
+        tag.style.cursor = 'pointer';
+        tag.style.fontWeight = '700';
+        tag.addEventListener('click', function(e){
+          e.stopPropagation();
+          if(selected.has(name)) selected.delete(name); else selected.add(name);
+          tag.textContent = selected.has(name) ? 'Selected' : 'Select';
+          tag.style.background = selected.has(name) ? '#2e7a54' : '#ffffff';
+          tag.style.color = selected.has(name) ? '#ffffff' : '#173229';
+          save();
+        });
+        card.appendChild(tag);
+      });
+      // When user navigates away (e.g., back button to booking), preserve selection and exit mode
+      window.addEventListener('beforeunload', function(){ localStorage.removeItem('lush_select_mode'); });
+    })();
+
+    // Persist catalog names for booking dropdown
+    (function(){
+      try{
+        var names = Array.from(document.querySelectorAll('.product'))
+          .map(function(card){ return card.getAttribute('data-name') || card.querySelector('h4')?.textContent?.trim(); })
+          .filter(Boolean);
+        // de-duplicate
+        var uniq = Array.from(new Set(names));
+        if(uniq.length){ localStorage.setItem('lush_catalog_names', JSON.stringify(uniq)); }
+      }catch(e){}
+    })();
+
+    // Update nav login/logout based on auth
+    (function(){
+      var user = getCurrentUser();
+      var login = document.getElementById('loginLink');
+      var logout = document.getElementById('logoutLink');
+      if(user){
+        if(login){
+          var dn = displayNameFromEmail(user.email);
+          login.textContent = dn ? ('Hi, ' + dn) : user.email;
+          login.href = 'favorites.html';
+        }
+        if(logout){ logout.style.display = 'inline'; }
+      }
+      if(logout){
+        logout.addEventListener('click', function(e){
+          e.preventDefault();
+          localStorage.removeItem('lush_user');
+          window.location.reload();
+        });
+      }
+    })();
+  </script>
+
+  <!-- NOTES:
+       - This is a single-file HTML + CSS starting point that mirrors the layout you provided.
+       - Replace the small svg placeholders and `background` images with your real images inside the <svg> areas or change the CSS backgrounds.
+       - If you want me to extract the CSS into a separate .css file or make it pixel-perfect (fonts, exact spacings, icons), tell me which section to tweak and I'll update the code.
+  -->
+</body>
+</html>

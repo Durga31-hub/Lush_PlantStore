@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login — Lush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--dark:#214f3b;--muted:#6b7b73}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Poppins,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#173229;background: url('Assests/Gallery_2.png') center/cover no-repeat fixed}
+    header{background:rgba(33,79,59,0.85);backdrop-filter:saturate(140%) blur(2px);color:#fff;padding:18px 20px}
+    header .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header a{color:#fff;text-decoration:none;font-weight:600}
+    main{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:40px 20px}
+    .card{width:100%;max-width:720px;background:rgba(255,255,255,0.9);backdrop-filter:saturate(140%) blur(2px);border-radius:16px;box-shadow:0 18px 48px rgba(0,0,0,.18);padding:32px}
+    label{display:block;font-size:14px;font-weight:600;margin:12px 0 6px}
+    input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #dbe7df;background:#f9fbfa}
+    .actions{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap}
+    .btn{padding:14px 20px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+    .primary{background:#214f3b;color:#fff}
+    .ghost{background:#eaf3ea;color:#214f3b;border:1px solid #d4e6db}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <div style="font-weight:800;letter-spacing:.3px">Lush — Login</div>
+      <a href="lush.html">← Back to Home</a>
+    </div>
+  </header>
+  <main>
+    <div class="card">
+      <h2 style="margin:0 0 10px">Welcome back</h2>
+      <p class="muted" style="margin:0 0 16px">Sign in to view and sync your favorites.</p>
+      <form id="loginForm">
+        <label>Email</label>
+        <input id="email" type="email" required placeholder="you@example.com"/>
+        <label>Password</label>
+        <input id="password" type="password" required placeholder="••••••••"/>
+        <div class="actions">
+          <a class="btn ghost" href="signup.html">Create account</a>
+          <button class="btn primary" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim().toLowerCase();
+      var pass = document.getElementById('password').value;
+      var users = JSON.parse(localStorage.getItem('lush_users')||'{}');
+      if(users[email] && users[email].password === pass){
+        localStorage.setItem('lush_user', JSON.stringify({email: email}));
+        var params = new URLSearchParams(location.search);
+        var ret = params.get('return');
+        window.location.href = ret ? decodeURIComponent(ret) : 'lush.html';
+      }else{
+        alert('Invalid credentials. Please try again or create an account.');
+      }
+    });
+  </script>
+</body>
+</html>
+
+

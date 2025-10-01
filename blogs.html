@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blogs — Lush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--dark:#214f3b;--muted:#6b7b73}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Poppins,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#173229;background:#f6f7f5}
+    header{background:var(--dark);color:#fff;padding:18px 20px}
+    header .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header a{color:#fff;text-decoration:none;font-weight:600}
+    main{max-width:1100px;margin:0 auto;padding:32px 16px}
+    h1{margin:6px 0 2px}
+    p.lead{color:var(--muted);margin:0 0 20px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.08)}
+    .thumb{height:180px;background:#eef7ee}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .content{padding:16px}
+    .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-top:8px}
+    .content a{color:#2e7a54;text-decoration:none;font-weight:700}
+    /* user-submitted blog styling */
+    .user-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+    .ub-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.10);transition:transform .25s ease, box-shadow .25s ease}
+    .ub-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(0,0,0,.14)}
+    .ub-thumb{height:160px;background:linear-gradient(135deg,#e8f5ec,#f3faf6)}
+    .ub-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .ub-content{padding:16px}
+    .chip{display:inline-block;background:#eaf3ea;color:#214f3b;border:1px solid #d4e6db;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+    .meta-sm{display:flex;justify-content:space-between;align-items:center;color:#6b7b73;font-size:12px;margin-top:10px}
+    .author{display:flex;align-items:center;gap:8px}
+    .avatar{width:28px;height:28px;border-radius:999px;background:#214f3b;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <div style="font-weight:800;letter-spacing:.3px">Lush — Blogs</div>
+      <a href="lush.html">← Back to Home</a>
+    </div>
+  </header>
+  <main>
+    <h1>Latest from the community</h1>
+    <p class="lead">Discover stories, tips and tutorials from plant lovers around the world.</p>
+    <div id="notice" style="display:none;margin:10px 0 16px;padding:12px 14px;background:#e7fff0;border:1px solid #b9f2cf;border-radius:10px">Your blog has been published.</div>
+    <div class="grid">
+      <!-- Sample 9 blog items -->
+      <article class="card">
+        <div class="thumb"><img src="Assests/Blog_!.png" alt="Blog"/></div>
+        <div class="content"><h3>Greener desks, happier minds</h3><p class="meta"><span>Jan 20, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Blog_2.png" alt="Blog"/></div>
+        <div class="content"><h3>Care guide for beginners</h3><p class="meta"><span>Jan 18, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Blog_3.png" alt="Blog"/></div>
+        <div class="content"><h3>Choosing the right planter</h3><p class="meta"><span>Jan 15, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Gallery_1.png" alt="Blog"/></div>
+        <div class="content"><h3>Lighting setups that work</h3><p class="meta"><span>Jan 14, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Gallery_2.png" alt="Blog"/></div>
+        <div class="content"><h3>Top 10 indoor plants</h3><p class="meta"><span>Jan 12, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Gallery_3.png" alt="Blog"/></div>
+        <div class="content"><h3>Watering myths debunked</h3><p class="meta"><span>Jan 10, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Gallery_4.png" alt="Blog"/></div>
+        <div class="content"><h3>Build a mini greenhouse</h3><p class="meta"><span>Jan 08, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Gallery_5.png" alt="Blog"/></div>
+        <div class="content"><h3>Repotting the right way</h3><p class="meta"><span>Jan 05, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+      <article class="card">
+        <div class="thumb"><img src="Assests/Gallery_1.png" alt="Blog"/></div>
+        <div class="content"><h3>Design your green corner</h3><p class="meta"><span>Jan 02, 2023</span><a href="#">Read →</a></p></div>
+      </article>
+    </div>
+    <div id="userBlogs" class="user-grid" style="margin-top:18px"></div>
+  </main>
+  <script>
+    // Inline expand for Read links with unique ~100-word content per card
+    (function(){
+      var paragraphs = [
+        'Creating a greener desk is more than a design trend; it meaningfully improves how you feel during long work sessions. Small succulents or hardy foliage add gentle visual breaks that reduce eye strain from screens. They subtly raise humidity, which can ease a dry throat or irritated skin. Caring for a living plant builds a tiny routine—water, rotate, prune—that signals the brain to pause and reset. Choose low‑light plants like ZZ or pothos, place them within peripheral vision, and dust leaves monthly to keep photosynthesis efficient. Over time, the desk becomes a place where you want to sit, focus and breathe.',
+        'For beginners, start simple and set realistic expectations. Every plant has three needs—light, water, airflow—and your job is to match them to your space. Observe light for a week: bright, indirect light suits most indoor favorites. Water thoroughly, then allow soil to dry to the depth your plant prefers; use a moisture meter early on. Repot only when roots circle the pot or growth slows. Finally, schedule gentle maintenance: wipe leaves, rotate the pot, and feed a balanced fertilizer in spring. Progress comes from observation, not perfection—plants forgive more than you think.',
+        'Picking the right planter can make the difference between thriving and merely surviving. Drainage is non‑negotiable: at least one hole and a saucer to protect surfaces. Porous terracotta breathes and helps prevent overwatering, while glazed ceramic retains moisture for thirstier plants. Size up just one to two inches in diameter to avoid a soggy soil core. Consider weight if you plan to move the pot—plastic is light, concrete is heavy but stable. Finally, match style to function: raised stands improve airflow around foliage and keep leaves off cold floors during winter.',
+        'Lighting can be friendly without being intense. South windows give strong light but may require sheer curtains to soften midday sun. East light is gentle and perfect for variegated species that scorch easily. If your room is dim, supplement with a full‑spectrum LED grow bulb placed 12–18 inches above the canopy on a 10–12 hour timer. Rotate plants weekly to keep growth even and prevent leaning. Remember that light drops off rapidly with distance; moving a plant two feet closer to a window often beats switching fertilizer brands or soil mixes.',
+        'A reliable top‑ten indoor list usually balances beauty and toughness: pothos, snake plant, ZZ plant, peace lily, spider plant, monstera, rubber plant, philodendron brasil, dracaena, and peperomia. They tolerate varying light, bounce back from an occasional missed watering, and respond well to pruning. Group plants with similar needs to simplify care—one watering can, one light level, one reminder on your phone. As your confidence grows, experiment with flowering options like anthurium or hoya for added color and fragrance without dramatically increasing maintenance.',
+        'Water myths confuse even experienced owners. Bottom watering is helpful but not mandatory; it’s simply a way to saturate soil evenly. Ice cubes do not protect orchids—they chill roots and slow growth. “Misting” is refreshing for you, not the plant; humidity trays or room humidifiers actually move the needle. The best routine is predictable: water deeply until runoff, let excess drain, and empty saucers after ten minutes. Use your finger or a meter to judge moisture at root level, and adjust by season—plants sip in winter and drink heartily in active spring growth.',
+        'A mini greenhouse at home accelerates propagation and reduces stress for tropical starts. A clear storage bin with a latched lid becomes a perfect humidity dome—add a few vent holes to prevent stagnation. Place cuttings in moistened, airy mix with perlite, then keep the bin near a bright window or under LED lights. Open the lid daily for fresh air exchange. Once roots reach an inch or two, gradually acclimate to room humidity by propping the lid open over several days. This gentle transition prevents leaf wilt and helps cuttings establish quickly.',
+        'Repotting isn’t a yearly chore; it’s a response to the plant’s signals. When you see roots poking through the drainage holes, water rushing straight through, or the soil collapsing away from the pot, it’s time. Loosen circling roots with your fingers and trim any mushy sections. Choose a pot just one size larger and refresh with a mix tailored to the species—chunky aroid mix for monstera, faster draining blend for succulents. Water lightly after repotting and hold fertilizer for two to three weeks while the roots recover and re‑anchor.',
+        'Designing a green corner is about layering heights, textures and tones. Start with a tall anchor plant like a fiddle leaf fig or dracaena. Add mid‑height companions—rubber plant, monstera—and finish with trailing pothos or ivy to soften edges. Mix leaf shapes: broad, split, striped, and narrow for visual rhythm. Use a neutral rug and a warm lamp to make the nook inviting in the evening. A small bench or stool doubles as a display stand and a place to do quick pruning or repotting without dragging supplies across the home.'
+      ];
+      document.querySelectorAll('.grid .card .content a').forEach(function(link, idx){
+        link.addEventListener('click', function(e){
+          e.preventDefault();
+          var content = link.closest('.content');
+          var existing = content.querySelector('.more');
+          if(existing){
+            existing.remove();
+            link.textContent = 'Read →';
+            return;
+          }
+          var more = document.createElement('p');
+          more.className = 'more';
+          more.style.marginTop = '10px';
+          more.style.color = '#6b7b73';
+          more.textContent = paragraphs[idx % paragraphs.length];
+          content.appendChild(more);
+          link.textContent = 'Hide ↑';
+        });
+      });
+    })();
+    // Render user-submitted blogs first
+    (function(){
+      try{
+        var list = JSON.parse(localStorage.getItem('lush_user_blogs')||'[]');
+        var wrap = document.getElementById('userBlogs');
+        if(list.length){
+          var frag = document.createDocumentFragment();
+          var imgs = ['Assests/Blog_!.png','Assests/Blog_2.png','Assests/Blog_3.png','Assests/Gallery_1.png','Assests/Gallery_2.png','Assests/Gallery_3.png'];
+          list.forEach(function(b, i){
+            var art = document.createElement('article');
+            art.className = 'ub-card';
+            var img = imgs[i % imgs.length];
+            var initials = (b.author||'U').trim().charAt(0).toUpperCase();
+            art.innerHTML = '<div class="ub-thumb"><img src="'+img+'" alt="Blog"/></div>'+
+                            '<div class="ub-content">'+
+                            '<div class="chip">Community</div>'+
+                            '<h3 style="margin:10px 0 6px">'+b.title+'</h3>'+
+                            '<p style="margin:0; color:#6b7b73">'+b.content+'</p>'+
+                            '<div class="meta-sm"><div class="author"><div class="avatar">'+initials+'</div><span>'+ (b.author||'Anonymous') +'</span></div><span>'+new Date(b.createdAt).toLocaleDateString()+'</span></div>'+
+                            '</div>';
+            frag.appendChild(art);
+          });
+          wrap.appendChild(frag);
+        }
+      }catch(e){}
+      var params = new URLSearchParams(location.search);
+      if(params.get('posted')==='1'){ document.getElementById('notice').style.display='block'; }
+    })();
+  </script>
+</body>
+</html>
+
+
