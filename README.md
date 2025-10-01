@@ -1,6 +1,7 @@
 # Lush_PlantStore
 
 🌿 Lush Plant Store Website
+
 📌 Project Overview
 
 A simple, responsive plant store website built using HTML and CSS. The site showcases plants, highlights featured products, and provides a clean shopping-like UI for users.
